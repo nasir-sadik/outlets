@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block content %}
+    <h1>Edit Outlet</h1>
+    <form action="" method="POST">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" name="outlet_name" value="{{ editoutlet.name }}" placeholder="Name..." required="required">
+  </div>
+  <button type="submit" class="btn btn-success">Update</button>
+</form>
+{% endblock content %}

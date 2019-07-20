@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+{% block content %}
+
+ 
+	 <h2>{{ outlet.name }} Item</h2>
+  <table class="table table-bordered">
+    <thead>
+      {% if not session.username %}
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+		  <th>Price</th>
+		  {% else %}
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th></th>
+            <th></th>
+        </tr>
+      {% endif %}
+        </tr>
+      
+    </thead>
+    <tbody>
+	
+    {% if not session.username %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td style="width:600px">{{ item.description }}</td>
+        <td>{{ item.price }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td style="width:600px">{{ item.description }}</td>
+        <td>{{ item.price }}</td>
+        <td><a href="{{url_for('editItem', outlet_id = outlet.id, item_id = item.id)}}"><i class="fa fa-edit"></i>Edit</a></td>
+        <td><a href="{{url_for('deleteItem', outlet_id = outlet.id, item_id = item.id)}}"><i class="fa fa-trash"></i>Remove</a></td>
+        
+
+      </tr>
+       {% endif %}
+  	
+    </tbody>
+  </table>
+
+
+{% endblock content %}

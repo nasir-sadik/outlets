@@ -1,0 +1,82 @@
+{% extends "main.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-5">
+    <div class="content-section">
+      {% if session.username %}
+      
+      <a class="nav-item nav-link box" href="{{ url_for('showOutlet')}}"><h3>Outlets</h3></a><a  class="box" href="{{ url_for('createNewOutlet')}}">( <i class="fa fa-plus"></i> Add)</h3></a>
+      {% else %}
+      <a class="nav-item nav-link" href="{{ url_for('showOutlet')}}"><h3>Outlets</h3></a>
+      {% endif %}
+      <table class="table">
+      <thead>
+  
+        {% if not session.username %}
+          <tr>
+            <td>
+              Name
+            </td>
+          </tr>
+          {% else %}
+            <tr>
+              <th>Name</th>
+              <th colspan="2">Actions</th>
+            </tr>
+        {% endif %}
+      </thead>
+      <tbody>
+      {% for outlet in outlet %}
+        {% if not session.username %}
+          <tr>
+            <td><a href="{{url_for('showItem', outlet_id = outlet.id, outlet_name = outlet.name)}}"> {{ outlet.name }} </a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td><a href="{{url_for('showItem', outlet_id = outlet.id, outlet_name = outlet.name)}}"> {{ outlet.name }} </a></td>
+            <td><a href="{{url_for('editOutlet', outlet_id = outlet.id)}}"><i class="fa fa-edit"></i>Edit</a></td>
+            <td><a href="{{url_for('deleteOutlet', outlet_id = outlet.id)}}"><i class="fa fa-trash"></i>Remove </a></td>
+            
+          </tr>
+
+
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+  
+      <div class="col-md-7">
+        <div class="content-section">
+          {% if session.username %}
+                {% if filter%}
+                    <h3 class="box">{{ filter }} items({{ itemCount }} item(s))</h3><a class="nav-item nav-link box" href="{{ url_for('createNewItem')}}">( <i class="fa fa-plus"></i> Add)</a>
+                {% else %}
+                    <h3 class="box">Latest Items</h3><a class="nav-item nav-link box" href="{{ url_for('createNewItem')}}">( <i class="fa fa-plus"></i> Add)</a>
+                {% endif %}
+          {% else %}
+                 {% if filter%}
+                    <h3 class="box">{{ filter }} items({{ itemCount }} item(s))</h3>
+                {% else %}
+                    <h3 class="box">Latest Items</h3>
+                {% endif %}
+          {% endif %}
+          
+            <ol class="rectangle-list">
+              {% for item in items %}
+              <li><a href="{{url_for('showSpecificItem', outlet_name = item.outlet.name, item_name = item.name)}}"> {{ item.name }} ({{ item.outlet.name }}) </a> </li>
+              {% endfor %}
+
+              
+        </ol>
+            
+              
+        </div>
+      </div>
+  </div>
+
+
+
+{% endblock content %}

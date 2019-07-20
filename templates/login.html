@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Outlets</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+        <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='navbar-fixed-top.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='materialize.css') }}">
+
+       
+   
+          <script>
+    function start() {
+      gapi.load('auth2', function() {
+        auth2 = gapi.auth2.init({
+          client_id: '23856371232-0vn6i8gjh81agc8bc528hpbdmn95movh.apps.googleusercontent.com',
+          // Scopes to request in addition to 'profile' and 'email'
+          //scope: 'additional_scope'
+        });
+      });
+    }
+  </script>
+      </head>
+
+<body>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+     <a class="navbar-brand mr-4" href="/">  <img  alt="Logo" src="{{ url_for('static',filename='logo.png') }}"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+  {% if  session.username %}
+  <li class="active"><a class="nav-item nav-link"href="{{ url_for('showOutlet')}}">Home</a></li>
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Register<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-item nav-link" href="{{ url_for('createNewOutlet')}}">New Outlet</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('createNewItem')}}">New Item</a></li>
+          </ul>
+    
+        </li>
+  <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Json Data<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-item nav-link" href="{{ url_for('jSONView')}}">JsonView</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('outletJSON')}}">JsonViewOutlet</a></li>
+    <li><a class="nav-item nav-link" href="{{ url_for('itemsJSON')}}">JsonViewItem</a></li>
+          </ul>
+    
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a class="nav-item nav-link" href="/">{{ session.username }}</a></li>
+        <li> <a class="nav-item nav-link" href="/gdisconnect">Logout</a></li>
+       
+      </ul>
+  {% else %}
+  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="nav-item nav-link" href="/login">Login</a></li>
+      </ul>
+  {% endif %}
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+
+    <div style="padding-left: 450px;">
+    <main role="main" class="container">
+      <article class="media content-section">
+     <div class="media-body">
+      <div class="row" style="padding-left: 100px;">
+        <div class="col-md-8">
+          </br>
+          
+          </br></br></br></br></br></br></br>
+
+           <div class="btn white darken-4 col s10 m6" >
+                <a href="#" style="text-transform:none" id='signinButton'>
+                    <div class="left">
+                        <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                    </div>
+                    Login with Google
+                </a>
+           </div>
+       
+          
+        </div>
+      </div>
+       </div>
+        </article>
+    </main>
+</div>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <p>Redirecting... </p>
+    </div>
+  <!-- Modal -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <!-- END Pre-requisites -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script>
+    $('#signinButton').click(function() {
+      // signInCallback defined in step 6.
+      auth2.grantOfflineAccess().then(signInCallback);
+    });
+
+    function signInCallback(authResult) {
+    if (authResult['code']) {
+      // Hide the sign-in button now that the user is authorized
+      $('#signinButton').attr('style', 'display: none');
+      
+      $.ajax({
+        type: 'POST',
+        url: '/gconnect?state={{STATE}}',
+        processData: false,
+        data: authResult['code'],
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          if (result) {
+            $("#myModal").modal("show")
+           setTimeout(function() {
+            window.location.href = "/index";
+           }, 4000);
+            
+        } else if (authResult['error']) {
+      console.log('Error: ' + authResult['error']);
+    } else {
+          $('#result').html('Failed to make a server-side call');
+           }
+        }
+        
+    }); } }
+
+  </script>
+</body>
+</html>
