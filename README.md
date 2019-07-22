@@ -12,8 +12,6 @@ Outlets is web application that will alow users to create oulets and their items
 1. static folder
 
 ## Tool you need to install
-1. Virtual Box
-1. Vagrant
 1. Python 3.6.2
 1. Flask framework
 
