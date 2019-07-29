@@ -11,7 +11,7 @@ Outlets is Python Flask web application that will alow users to create oulets an
 1. SSH Port  : 2200
 1. User      : grader
 
-## Project Demonistration
+## Project Demonstration
 
 1. Url : http://mirosan.com/
 
