@@ -40,6 +40,7 @@ Outlets is Python Flask web application that will alow users to create oulets an
 - Log in to ssh ` ssh ubuntu@35.173.132.98 -p 22 -i .ssh/LightsailDefaultKey-eu-central-1.pem`
 
 
+
 ### 3. Create user grader
 
 - Create new user grader
@@ -63,12 +64,19 @@ Outlets is Python Flask web application that will alow users to create oulets an
    # Port 22 change it to Port 2200
    # service ssh restart
    ```
-### 5. Set Timezone to UTC
-
-```
-# sudo dpkg-reconfigure tzdata
-```
-
+### 5. System Configuration
+- Set timezone to UTC
+    ```
+    # sudo dpkg-reconfigure tzdata
+    ```
+- Update the system
+    ```
+    sudo apt-get update
+    ```
+- upgarade the system
+    ```
+    sudo apt-get upgrade
+    ```
 ### 6. Create SSH key pair
 
 - On your local machine 
@@ -105,6 +113,19 @@ sudo ufw default allow outgoing
 sudo ufw enable
 sudo ufw status
 ```
+### 9. Forcing Key Based Authentication and disabling root login
+ 
+- Open the `/etc/ssh/sshd_config`:
+	
+   ```
+   # sudo nano /etc/ssh/sshd_config
+   ```
+- To enforce key base authentication:
+   Change the line `PasswordAuthentication yes` to `PasswordAuthentication no`
+ 
+- To disable root login:
+    Change the line `PermitRootLogin prohibit-password` to `PermitRootLogin no`
+
 
 
 ### 10. Cloning the project application
@@ -169,7 +190,7 @@ sudo ufw status
    $ sudo service apache2 restart
    ```
 
-### 13. Create the .wsgi File
+### 12. Create the .wsgi File
 
 - Create file `outlets.wsgi` and opent
 
