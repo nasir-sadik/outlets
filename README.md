@@ -10,6 +10,7 @@ Outlets is Python Flask web application that will alow users to create oulets an
 1. IP Address: 35.173.132.98
 1. SSH Port  : 2200
 1. User      : grader
+1. Password  : FnP_123 
 
 ## Project Demonstration
 
