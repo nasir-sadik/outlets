@@ -1,30 +1,95 @@
 
 # Oulets Project
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-Outlets is web application that will alow users to create oulets and their items in order to display it to all vistors of this web page.
+Outlets is Python Flask web application that will alow users to create oulets and their items in order to display it to all vistors of this web page.
 
 
-## Included Files
-1. database_setup.py
-1. outletDB.db
-1. outlet.py
-1. templets folder
-1. static folder
+## The IP address and SSH port
 
-## Tool you need to install
-1. Python 3.6.2
-1. Flask framework
+1. IP Address: 35.173.132.98
+1. SSH Port  : 2200
+1. User      : grader
 
-## Database Structure
-The databse contains the following three tables: 
-1. **user** - contains all registered users.  
-1. **outlet** - contains all outlets information.
-1. **item** - contains all items of the outlets.
+## Project Demonistration
 
-## Runing The Project
-1. Install Vagrant and VirtualBox
-1. Launch the Vagrant VM (vagrant up)
-1. Write your Flask application locally in the vagrant/catalog directory (which will automatically be synced to /vagrant/catalog within the VM).
-1. Run  `python /vagrant/catalog/online_store/databse_setup.py` , this is for the first time to create database.
-1. Run Run your application within the VM `python /vagrant/catalog/online_store/outlet.py`
-1. Access and test your application by visiting http://localhost:5000 locally
+1. Url : http://mirosan.com/
+
+
+## Tools To Install
+
+1. postgresql
+1. apache2
+1. python-pip
+1. virtualenv
+1. Flask
+1. httplib2
+1. python3-oauth2client
+1. python3-requests
+1. python-requests
+1. python3-sqlalchemy
+1. python3-psycopg2
+
+## Cofigurations
+### 1. Getting started
+ 
+- Create  [lightsail virtual server instance](https://www.systemfixes.com/2018/12/31/how-to-create-an-aws-lightsail-linux-instance/)
+- Download the AWS provided default private key [LightsailDefaultKey-eu-central-1.pem](https://lightsail.aws.amazon.com/ls/webapp/account/keys) 
+
+### 2. Accessing the remote server via SSH
+- Log in to ssh ` ssh ubuntu@35.173.132.98 -p 22 -i .ssh/LightsailDefaultKey-eu-central-1.pem`
+
+
+### 3. Create user grader
+
+- Create new user grader
+
+	```
+	# adduser grader
+	```
+
+- Add `grader` to the Group `sudo`
+
+	```
+	# usermod -aG sudo grader
+    # su - grader
+    ```
+### 4. Changing the SSH Port from 22 to 2200
+
+- Open the `/etc/ssh/sshd_config`:
+	
+   ```
+   # sudo nano /etc/ssh/sshd_config
+   # Port 22 change it to Port 2200
+   # service ssh restart
+   ```
+### 5. Set Timezone to UTC
+
+```
+# sudo dpkg-reconfigure tzdata
+```
+
+### 6. Create SSH key pair
+
+- On your local machine 
+```Open Git Bash then type
+   $ ssh-keygen
+  ```
+### 7. Installing a Public Key
+
+- On the remote server
+
+	```
+    mkdir .ssh
+    sudo touch .ssh/authorized_keys
+    sudo nano .ssh/authorized_keys
+    ```
+    
+    ```
+    Copy the public key content from the local machine file and save, change the access level
+    chmod 700 .ssh
+    chmod 644 .ssh/authorized_keys
+    ```
+
+## Third-party resources
+https://www.systemfixes.com/2018/12/31/how-to-create-an-aws-lightsail-linux-instance/
