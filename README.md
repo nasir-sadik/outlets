@@ -229,5 +229,5 @@ sudo ufw status
    ```
 
 ## Third-party resources
-https://www.systemfixes.com/2018/12/31/how-to-create-an-aws-lightsail-linux-instance/
-https://dillinger.io/
+- https://www.systemfixes.com/2018/12/31/how-to-create-an-aws-lightsail-linux-instance/
+- https://dillinger.io/
