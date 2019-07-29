@@ -227,6 +227,8 @@ sudo ufw status
    ```
    $ sudo python outlet.py
    ```
+## Authors
+- **Abdinasir Sadik** - *Initial work* - [Outlets](https://github.com/nasir-sadik/outlets)
 
 ## Third-party resources
 - https://www.systemfixes.com/2018/12/31/how-to-create-an-aws-lightsail-linux-instance/
